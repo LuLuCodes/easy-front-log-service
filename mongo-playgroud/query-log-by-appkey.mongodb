@@ -1,0 +1,3 @@
+use('easy-front-log-db');
+
+db.openapilogs.find({app_key: '123'}).sort({create_time: -1})
