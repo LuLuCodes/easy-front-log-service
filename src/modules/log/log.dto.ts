@@ -32,20 +32,20 @@ export class CreateOpenApiLogDTO extends BaseDTO {
   readonly app_key: string;
 
   @ApiProperty({
-    description: 'host',
+    description: 'from_ip',
     type: String,
   })
-  @IsString({ message: 'host必须为字符串' })
-  @IsNotEmpty({ message: 'host不能为空字符串' })
-  readonly host: string;
+  @IsString({ message: 'from_ip必须为字符串' })
+  @IsNotEmpty({ message: 'from_ip不能为空字符串' })
+  readonly from_ip: string;
 
   @ApiProperty({
-    description: 'path',
+    description: 'url',
     type: String,
   })
-  @IsString({ message: 'path必须为字符串' })
-  @IsNotEmpty({ message: 'path不能为空字符串' })
-  readonly path: string;
+  @IsString({ message: 'url必须为字符串' })
+  @IsNotEmpty({ message: 'url不能为空字符串' })
+  readonly url: string;
 
   @ApiProperty({
     description: 'method',
@@ -56,11 +56,48 @@ export class CreateOpenApiLogDTO extends BaseDTO {
   readonly method: string;
 
   @ApiPropertyOptional({
+    description: 'request_session',
+    type: Object,
+  })
+  @IsOptional()
+  readonly request_session?: object;
+
+  @ApiPropertyOptional({
     description: 'request_parms',
     type: Object,
   })
   @IsOptional()
   readonly request_parms?: object;
+
+  @ApiPropertyOptional({
+    description: 'request_query',
+    type: Object,
+  })
+  @IsOptional()
+  readonly request_query?: object;
+
+  @ApiPropertyOptional({
+    description: 'request_body',
+    type: Object,
+  })
+  @IsOptional()
+  readonly request_body?: object;
+
+  @ApiPropertyOptional({
+    description: 'referer',
+    type: String,
+  })
+  @IsOptional()
+  @IsString({ message: 'referer必须为字符串' })
+  readonly referer?: string;
+
+  @ApiPropertyOptional({
+    description: 'ua',
+    type: String,
+  })
+  @IsOptional()
+  @IsString({ message: 'ua必须为字符串' })
+  readonly ua?: string;
 
   @ApiPropertyOptional({
     description: 'response_status_code',
@@ -71,9 +108,9 @@ export class CreateOpenApiLogDTO extends BaseDTO {
   readonly response_status_code?: number;
 
   @ApiPropertyOptional({
-    description: 'response_parms',
+    description: 'response_data',
     type: Object,
   })
   @IsOptional()
-  readonly response_parms?: object;
+  readonly response_data?: object;
 }

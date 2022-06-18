@@ -9,25 +9,40 @@ export class OpenApiLog extends Document {
   app_key: string;
 
   @Prop({ required: true })
-  host: string;
+  from_ip: string;
 
   @Prop({ required: true })
-  path: string;
+  url: string;
 
   @Prop({ required: true })
   method: string;
 
   @Prop(raw({}))
-  request_parms: Record<string, any>;
+  request_session: Record<string, any>;
+
+  @Prop(raw({}))
+  request_params: Record<string, any>;
+
+  @Prop(raw({}))
+  request_query: Record<string, any>;
+
+  @Prop(raw({}))
+  request_body: Record<string, any>;
+
+  @Prop()
+  referer: string;
+
+  @Prop()
+  ua: string;
 
   @Prop()
   response_status_code: number;
 
   @Prop(raw({}))
-  response_parms: Record<string, any>;
+  response_data: Record<string, any>;
 
   @Prop({ required: true })
-  create_time: number;
+  time: number;
 }
 
 export const OpenApiLogSchema = SchemaFactory.createForClass(OpenApiLog);

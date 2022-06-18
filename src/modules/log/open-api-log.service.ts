@@ -14,8 +14,7 @@ export class OpenApiLogService {
 
   // 添加
   async create(logDto: CreateOpenApiLogDTO): Promise<void> {
-    const log_data = { ...logDto, create_time: Date.now() };
-    await this.logQueue.add(log_data, {
+    await this.logQueue.add(logDto, {
       attempts: 3,
       delay: 20,
       removeOnComplete: true,

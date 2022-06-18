@@ -1,6 +1,6 @@
 {
   "name": "easy-front-log-service",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "基于Nest和MongoDB的日志服务",
   "author": "",
   "private": true,
