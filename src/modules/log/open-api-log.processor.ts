@@ -14,7 +14,7 @@ export class OpenApiLogLogProcessor {
   ) {}
 
   @Process()
-  async handleTranscode(job: Job<unknown>) {
+  async handleLog(job: Job<unknown>) {
     const createLog = new this.openApiLog(job.data);
     return await createLog.save();
   }
