@@ -73,6 +73,7 @@ import while_list from '@config/white-list';
           config: {
             host: configService.get('redis.host'),
             port: configService.get('redis.port'),
+            password: configService.get('redis.password'),
             db: configService.get('redis.cache_db_index'),
           },
         };
@@ -85,6 +86,7 @@ import while_list from '@config/white-list';
         redis: {
           host: configService.get('redis.host'),
           port: configService.get('redis.port'),
+          password: configService.get('redis.password'),
           db: configService.get('redis.queue_db_index'),
         },
       }),

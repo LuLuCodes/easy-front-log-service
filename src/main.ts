@@ -93,6 +93,7 @@ async function bootstrap() {
   RedisLock.init({
     host: config.get('redis.host'),
     port: config.get('redis.port'),
+    password: config.get('redis.password'),
     db: config.get('cache.redis_db'),
   });
   // 监听所有的请求路由，并打印日志
