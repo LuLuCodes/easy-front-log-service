@@ -115,9 +115,9 @@ export class CreateOpenApiLogDTO extends BaseDTO {
   readonly response_data?: object;
 
   @ApiProperty({
-    description: 'time',
+    description: 'request_time',
     type: Number,
   })
-  @IsInt({ message: 'time必须为有效整数' })
-  readonly time: number;
+  @IsInt({ message: 'request_time必须为有效整数' })
+  readonly request_time: number;
 }

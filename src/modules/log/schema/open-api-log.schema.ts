@@ -42,7 +42,10 @@ export class OpenApiLog extends Document {
   response_data: Record<string, any>;
 
   @Prop({ required: true })
-  time: number;
+  request_time: number;
+
+  @Prop({ required: true })
+  display_time: string;
 }
 
 export const OpenApiLogSchema = SchemaFactory.createForClass(OpenApiLog);
