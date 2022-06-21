@@ -148,6 +148,13 @@ export class QueryApiLogDTO extends QueryDTO {
   readonly end_time: string;
 
   @ApiPropertyOptional({
+    description: 'filter',
+    type: Object,
+  })
+  @IsOptional()
+  readonly filter?: object;
+
+  @ApiPropertyOptional({
     description: 'sort',
     type: Object,
   })

@@ -13,7 +13,7 @@ export class ApiLogService {
   constructor(
     @InjectModel('ApiLog')
     private apiLog: Model<ApiLogDocument>,
-    @InjectQueue('api-service-log') private logQueue: Queue,
+    @InjectQueue('api-log') private logQueue: Queue,
     private cacheService: CacheService,
   ) {}
 
@@ -29,11 +29,11 @@ export class ApiLogService {
 
   // 查询
   async query(queryDto: QueryApiLogDTO): Promise<any> {
-    const { from_ip, url, start_time, end_time, sort } = queryDto;
+    const { from_ip, url, start_time, end_time, sort, filter } = queryDto;
     if (start_time > end_time) {
       throw new Error('开始时间不能大于结束时间');
     }
-    const query: any = {
+    let query: any = {
       display_time: { $gte: start_time, $lte: end_time },
     };
     if (from_ip) {
@@ -42,8 +42,11 @@ export class ApiLogService {
     if (url) {
       query.url = url;
     }
+    if (filter) {
+      query = { ...query, filter };
+    }
     let query_sort: any = { request_time: 1 };
-    if (query_sort) {
+    if (sort) {
       query_sort = { ...query_sort, ...sort };
     }
 
