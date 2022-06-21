@@ -131,21 +131,21 @@ export class QueryApiLogDTO extends QueryDTO {
   @IsString({ message: 'url必须为字符串' })
   readonly url?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'start_time',
     type: String,
   })
+  @IsOptional()
   @IsString({ message: 'start_time必须为字符串' })
-  @IsNotEmpty({ message: 'start_time不能为空字符串' })
-  readonly start_time: string;
+  readonly start_time?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'end_time',
     type: String,
   })
+  @IsOptional()
   @IsString({ message: 'end_time必须为字符串' })
-  @IsNotEmpty({ message: 'end_time不能为空字符串' })
-  readonly end_time: string;
+  readonly end_time?: string;
 
   @ApiPropertyOptional({
     description: 'filter',

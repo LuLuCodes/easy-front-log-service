@@ -30,13 +30,22 @@ export class OpenApiLogService {
   async query(queryDto: QueryOpenApiLogDTO): Promise<any> {
     const { app_key, from_ip, url, start_time, end_time, sort, filter } =
       queryDto;
-    if (start_time > end_time) {
-      throw new Error('开始时间不能大于结束时间');
-    }
     let query: any = {
       app_key,
-      display_time: { $gte: start_time, $lte: end_time },
     };
+
+    if (start_time || end_time) {
+      if (start_time && end_time && start_time > end_time) {
+        throw new Error('开始时间不能大于结束时间');
+      }
+      query.display_time = {};
+      if (start_time) {
+        query.display_time.$gte = start_time;
+      }
+      if (end_time) {
+        query.display_time.$lte = end_time;
+      }
+    }
     if (from_ip) {
       query.from_ip = from_ip;
     }
@@ -44,7 +53,7 @@ export class OpenApiLogService {
       query.url = url;
     }
     if (filter) {
-      query = { ...query, filter };
+      query = { ...query, ...filter };
     }
     let query_sort: any = { request_time: 1 };
     if (sort) {
