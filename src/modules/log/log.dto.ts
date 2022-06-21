@@ -22,15 +22,7 @@ import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { QueryDTO, BaseDTO } from '@dto/BaseDTO';
 
-export class CreateOpenApiLogDTO extends BaseDTO {
-  @ApiProperty({
-    description: 'app_key',
-    type: String,
-  })
-  @IsString({ message: 'app_key必须为字符串' })
-  @IsNotEmpty({ message: 'app_key不能为空字符串' })
-  readonly app_key: string;
-
+export class CreateApiLogDTO extends BaseDTO {
   @ApiProperty({
     description: 'from_ip',
     type: String,
@@ -120,4 +112,65 @@ export class CreateOpenApiLogDTO extends BaseDTO {
   })
   @IsInt({ message: 'request_time必须为有效整数' })
   readonly request_time: number;
+}
+
+export class QueryApiLogDTO extends QueryDTO {
+  @ApiPropertyOptional({
+    description: 'from_ip',
+    type: String,
+  })
+  @IsOptional()
+  @IsString({ message: 'from_ip必须为字符串' })
+  readonly from_ip?: string;
+
+  @ApiPropertyOptional({
+    description: 'url',
+    type: String,
+  })
+  @IsOptional()
+  @IsString({ message: 'url必须为字符串' })
+  readonly url?: string;
+
+  @ApiProperty({
+    description: 'start_time',
+    type: String,
+  })
+  @IsString({ message: 'start_time必须为字符串' })
+  @IsNotEmpty({ message: 'start_time不能为空字符串' })
+  readonly start_time: string;
+
+  @ApiProperty({
+    description: 'end_time',
+    type: String,
+  })
+  @IsString({ message: 'end_time必须为字符串' })
+  @IsNotEmpty({ message: 'end_time不能为空字符串' })
+  readonly end_time: string;
+
+  @ApiPropertyOptional({
+    description: 'sort',
+    type: Object,
+  })
+  @IsOptional()
+  readonly sort?: object;
+}
+
+export class CreateOpenApiLogDTO extends CreateApiLogDTO {
+  @ApiProperty({
+    description: 'app_key',
+    type: String,
+  })
+  @IsString({ message: 'app_key必须为字符串' })
+  @IsNotEmpty({ message: 'app_key不能为空字符串' })
+  readonly app_key: string;
+}
+
+export class QueryOpenApiLogDTO extends QueryApiLogDTO {
+  @ApiProperty({
+    description: 'app_key',
+    type: String,
+  })
+  @IsString({ message: 'app_key必须为字符串' })
+  @IsNotEmpty({ message: 'app_key不能为空字符串' })
+  readonly app_key: string;
 }

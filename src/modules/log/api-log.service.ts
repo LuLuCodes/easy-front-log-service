@@ -4,20 +4,21 @@ import { InjectQueue } from '@nestjs/bull';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { CacheService } from '@service/cache.service';
-import { CreateOpenApiLogDTO, QueryOpenApiLogDTO } from './log.dto';
-import { OpenApiLog, OpenApiLogDocument } from './schema/open-api-log.schema';
+import { CreateApiLogDTO, QueryApiLogDTO } from './log.dto';
+import { ApiLog, ApiLogDocument } from './schema/api-log.schema';
 import * as _ from 'lodash';
 
 @Injectable()
-export class OpenApiLogService {
+export class ApiLogService {
   constructor(
-    @InjectModel('OpenApiLog') private openApiLog: Model<OpenApiLogDocument>,
-    @InjectQueue('open-api-log') private logQueue: Queue,
+    @InjectModel('ApiLog')
+    private apiLog: Model<ApiLogDocument>,
+    @InjectQueue('api-service-log') private logQueue: Queue,
     private cacheService: CacheService,
   ) {}
 
   // 添加
-  async create(logDto: CreateOpenApiLogDTO): Promise<void> {
+  async create(logDto: CreateApiLogDTO): Promise<void> {
     await this.logQueue.add(logDto, {
       attempts: 3,
       delay: 20,
@@ -27,13 +28,12 @@ export class OpenApiLogService {
   }
 
   // 查询
-  async query(queryDto: QueryOpenApiLogDTO): Promise<any> {
-    const { app_key, from_ip, url, start_time, end_time, sort } = queryDto;
+  async query(queryDto: QueryApiLogDTO): Promise<any> {
+    const { from_ip, url, start_time, end_time, sort } = queryDto;
     if (start_time > end_time) {
       throw new Error('开始时间不能大于结束时间');
     }
     const query: any = {
-      app_key,
       display_time: { $gte: start_time, $lte: end_time },
     };
     if (from_ip) {
@@ -47,8 +47,8 @@ export class OpenApiLogService {
       query_sort = { ...query_sort, ...sort };
     }
 
-    const total: number = await this.openApiLog.countDocuments(query);
-    const list = await this.openApiLog
+    const total: number = await this.apiLog.countDocuments(query);
+    const list = await this.apiLog
       .find(query)
       .sort(query_sort)
       .skip((queryDto.page_num - 1) * queryDto.page_size)

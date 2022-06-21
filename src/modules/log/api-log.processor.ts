@@ -6,11 +6,11 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import * as dayjs from 'dayjs';
 import { CacheService } from '@service/cache.service';
-import { OpenApiLogDocument } from './schema/open-api-log.schema';
-@Processor('open-api-log')
-export class OpenApiLogLogProcessor {
+import { ApiLogDocument } from './schema/api-log.schema';
+@Processor('api-log')
+export class ApiLogLogProcessor {
   constructor(
-    @InjectModel('OpenApiLog') private openApiLog: Model<OpenApiLogDocument>,
+    @InjectModel('ApiLog') private apiLog: Model<ApiLogDocument>,
     private cacheService: CacheService,
   ) {}
 
@@ -21,7 +21,7 @@ export class OpenApiLogLogProcessor {
       log_data.display_time = `${dayjs(log_data.request_time).format(
         'YYYY-MM-DD HH:mm:ss',
       )}`;
-      const createLog = new this.openApiLog(log_data);
+      const createLog = new this.apiLog(log_data);
       await createLog.save();
     } catch (error) {
       console.error('handleLog: ', error);
