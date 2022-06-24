@@ -38,12 +38,12 @@ export class OpenApiLogService {
       if (start_time && end_time && start_time > end_time) {
         throw new Error('开始时间不能大于结束时间');
       }
-      query.display_time = {};
+      query.request_time = {};
       if (start_time) {
-        query.display_time.$gte = start_time;
+        query.request_time.$gte = new Date(start_time).getTime();
       }
       if (end_time) {
-        query.display_time.$lte = end_time;
+        query.request_time.$lte = new Date(end_time).getTime();
       }
     }
     if (from_ip) {

@@ -1,3 +1,3 @@
-use('easy-front-log-db');
+use('trf-store-log-db');
 
 db.openapilogs.find({app_key: '123'}).sort({create_time: -1})

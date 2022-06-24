@@ -1,0 +1,20 @@
+
+use('trf-store-log-db');
+
+// db.apilogs.createIndex({'from_ip': 1},{background:true});
+// db.apilogs.createIndex({'url': 1},{background:true});
+// db.apilogs.createIndex({'method': 1},{background:true});
+// db.apilogs.createIndex({'request_time': 1},{background:true});
+// db.apilogs.createIndex({'display_time': 1},{background:true});
+// db.apilogs.createIndex({'from_ip': 1,'url': 1,'request_time': 1},{background:true});
+
+// db.openapilogs.createIndex({'app_key': 1},{background:true});
+// db.openapilogs.createIndex({'from_ip': 1},{background:true});
+// db.openapilogs.createIndex({'url': 1},{background:true});
+// db.openapilogs.createIndex({'method': 1},{background:true});
+// db.openapilogs.createIndex({'request_time': 1},{background:true});
+// db.openapilogs.createIndex({'display_time': 1},{background:true});
+
+ db.openapilogs.createIndex({'app_key':1,'from_ip': 1,'url': 1,'request_time': 1},{background:true});
+
+
