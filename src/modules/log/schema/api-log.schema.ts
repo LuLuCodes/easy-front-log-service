@@ -43,6 +43,9 @@ export class ApiLog extends Document {
 
   @Prop({ required: true })
   display_time: string;
+
+  @Prop({ required: true })
+  created_at: Date;
 }
 
 export const ApiLogSchema = SchemaFactory.createForClass(ApiLog);

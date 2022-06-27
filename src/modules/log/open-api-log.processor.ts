@@ -21,6 +21,7 @@ export class OpenApiLogLogProcessor {
       log_data.display_time = `${dayjs(log_data.request_time).format(
         'YYYY-MM-DD HH:mm:ss',
       )}`;
+      log_data.created_at = new Date();
       const createLog = new this.openApiLog(log_data);
       await createLog.save();
     } catch (error) {

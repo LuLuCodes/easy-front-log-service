@@ -46,6 +46,9 @@ export class OpenApiLog extends Document {
 
   @Prop({ required: true })
   display_time: string;
+
+  @Prop({ required: true })
+  created_at: Date;
 }
 
 export const OpenApiLogSchema = SchemaFactory.createForClass(OpenApiLog);
