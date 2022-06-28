@@ -48,4 +48,19 @@ export class ApiLog extends Document {
   created_at: Date;
 }
 
-export const ApiLogSchema = SchemaFactory.createForClass(ApiLog);
+const LogSchema = SchemaFactory.createForClass(ApiLog);
+LogSchema.index({
+  from_ip: 1,
+  url: 1,
+  method: 1,
+  request_time: 1,
+  display_time: 1,
+});
+LogSchema.index(
+  {
+    created_at: 1,
+  },
+  { expires: '30d' },
+);
+
+export const ApiLogSchema = LogSchema;

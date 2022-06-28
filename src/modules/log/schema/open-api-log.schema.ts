@@ -51,4 +51,20 @@ export class OpenApiLog extends Document {
   created_at: Date;
 }
 
-export const OpenApiLogSchema = SchemaFactory.createForClass(OpenApiLog);
+const LogSchema = SchemaFactory.createForClass(OpenApiLog);
+LogSchema.index({
+  app_key: 1,
+  from_ip: 1,
+  url: 1,
+  method: 1,
+  request_time: 1,
+  display_time: 1,
+});
+LogSchema.index(
+  {
+    created_at: 1,
+  },
+  { expires: '30d' },
+);
+
+export const OpenApiLogSchema = LogSchema;
