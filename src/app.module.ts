@@ -13,7 +13,6 @@ import { SignGuard } from '@guard/sign.guard';
 import { AuthGuard } from '@guard/auth.guard';
 import { CacheService } from '@service/cache.service';
 import { CronTaskService } from '@service/cron-task.service';
-import { MqClientService } from '@service/mq.client.service';
 import { HttpService } from '@service/http.service';
 
 import { InitModule } from './init.module';
@@ -22,7 +21,6 @@ import { LogModule } from './modules/log/log.module';
 import app_config from '@config/app';
 import mongodb_config from '@config/mongodb';
 import mysql_config from '@config/mysql';
-import mq_config from '@config/mq';
 import oss_config from '@config/oss';
 import redis_config from '@config/redis';
 import session_config from '@config/session';
@@ -35,7 +33,6 @@ import while_list from '@config/white-list';
         app_config,
         mongodb_config,
         mysql_config,
-        mq_config,
         oss_config,
         redis_config,
         session_config,
@@ -106,7 +103,6 @@ import while_list from '@config/white-list';
     },
     CacheService,
     CronTaskService,
-    MqClientService,
   ],
 })
 export class AppModule {}
