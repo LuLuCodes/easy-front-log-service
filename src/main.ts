@@ -4,7 +4,6 @@ import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
-import { LoggerFunMiddleware } from '@middleware/logger.middleware';
 import { TransformInterceptor } from '@interceptor/transform.interceptor';
 import { HttpExceptionFilter } from '@filter/http-exception.filter';
 import { AllExceptionsFilter } from '@filter/any-exception.filter';
@@ -12,13 +11,13 @@ import { ValidationExceptionFilter } from '@filter/validation-exception-filter';
 import { RedisLock } from '@libs/redlock';
 import rateLimit from 'express-rate-limit';
 import * as helmet from 'helmet';
-// import * as cookieParser from 'cookie-parser';
+import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 import * as bodyParserXml from 'body-parser-xml';
 import * as compression from 'compression';
 import * as ConnectRedis from 'connect-redis';
 import * as session from 'express-session';
-// import { createClient } from 'redis';
+import { createClient } from 'redis';
 import * as multer from 'multer';
 
 bodyParserXml(bodyParser);
@@ -89,7 +88,30 @@ async function bootstrap() {
   );
   // 使用拦截器打印出参
   app.useGlobalInterceptors(new TransformInterceptor());
-
+  app.use(cookieParser());
+  const sessionRedis = createClient({
+    socket: {
+      host: config.get('redis.host'),
+      port: config.get('redis.port'),
+    },
+    password: config.get('redis.password'),
+    database: config.get('redis.cookie_db_index'),
+    legacyMode: true,
+  });
+  await sessionRedis.connect();
+  app.use(
+    session({
+      store: new RedisStore({
+        client: sessionRedis,
+      }),
+      secret: config.get('session.secret'),
+      key: config.get('session.key'),
+      cookie: config.get('session.cookie'),
+      resave: true,
+      rolling: true,
+      saveUninitialized: false,
+    }),
+  );
   RedisLock.init({
     socket: {
       host: config.get('redis.host'),
@@ -98,8 +120,6 @@ async function bootstrap() {
     password: config.get('redis.password'),
     database: config.get('cache.redis_db'),
   });
-  // 监听所有的请求路由，并打印日志
-  app.use(LoggerFunMiddleware);
   app.useGlobalFilters(new AllExceptionsFilter());
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalFilters(new ValidationExceptionFilter());
