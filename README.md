@@ -2,7 +2,7 @@
  * @Author: leyi leyi@myun.info
  * @Date: 2022-06-18 19:57:22
  * @LastEditors: leyi leyi@myun.info
- * @LastEditTime: 2022-10-10 11:04:50
+ * @LastEditTime: 2022-11-03 20:34:58
  * @FilePath: /easy-front-log-service/README.md
  * @Description:
  *
@@ -49,9 +49,10 @@ docker pull mongo:latest
 ```shell
 docker run -d --name mongodb -p 27018:27017 -v /home/mongodb/datadb:/data/db --privileged=true --restart always mongo --auth
 docker exec -it  mongodb  mongo admin
+# mongo5.0以上，请执行 docker exec -it  mongodb  mongosh admin
 db.createUser({ user: 'admin', pwd: 'Myun123jx', roles: [ { role: 'root', db: 'admin' },{ role: "userAdminAnyDatabase", db: "admin" } ] });
 db.auth("admin","Myun123jx");
-db.createUser({ user: 'myun', pwd: 'Myun123jx', roles: [ { role: "readWrite", db: "trf-store-log-db" } ] });
+db.createUser({ user: 'myun', pwd: 'Myun123jx', roles: [ { role: "readWrite", db: "log-db" } ] });
 db.auth("myun","Myun123jx");
 ```
 
